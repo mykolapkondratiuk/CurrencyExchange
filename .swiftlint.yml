@@ -1,0 +1,189 @@
+reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, junit)
+
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Pods
+
+# If you need help with rules run $ swiftlint
+
+opt_in_rules:
+  - closure_end_indentation
+  - closure_spacing
+  - empty_count
+  - explicit_init
+  - fatal_error_message
+  - first_where
+  - implicitly_unwrapped_optional
+  - multiline_parameters
+  - nesting
+  - operator_usage_whitespace
+  - overridden_super_call
+  - private_outlet
+  - protocol_property_accessors_order
+  - redundant_nil_coalescing
+  - sorted_imports
+  - syntactic_sugar
+  - vertical_whitespace
+  - number_separator
+
+disabled_rules: # rule identifiers to exclude from running
+  # - force_try
+  # - class_delegate_protocol
+  - function_parameter_count
+  # - function_body_length
+  # - todo
+  # - discarded_notification_center_observer
+  # - conditional_returns_on_newline
+  - redundant_optional_initialization
+  - implicit_getter
+  - switch_case_alignment
+  - sorted_imports
+  - void_return
+  - unused_optional_binding
+  - multiple_closures_with_trailing_closure
+  - vertical_parameter_alignment
+  - vertical_parameter_alignment_on_call
+  - notification_center_detachment
+  - extension_access_modifier
+  - redundant_set_access_control
+  - closure_end_indentation
+  - for_where
+  - trailing_whitespace
+
+force_cast: error
+force_try: error
+
+cyclomatic_complexity:
+  ignores_case_statements: true
+  warning: 20
+
+file_length:
+  warning: 1000
+  error: 1500
+
+line_length:
+  warning: 220
+  error: 250
+  ignores_comments: true
+  ignores_urls: true
+
+function_body_length:
+  warning: 300
+  error: 500
+
+nesting: 
+  type_level:
+    warning: 4
+    error: 6
+  statement_level:
+    warning: 6
+    error: 10
+
+identifier_name:
+  allowed_symbols: "_"
+  min_length: 3
+  max_length:
+    warning: 90
+    error: 1000
+  excluded:
+    - r
+    - g
+    - b
+    - a
+    - id
+    - i
+    - up
+    - to
+
+type_name:
+  allowed_symbols: "_"
+  min_length: 3 # only warning
+  max_length: # warning and error
+    warning: 50
+    error: 60
+  excluded:  # excluded via strin
+    - RGB
+    - HSV
+    - Bit
+    - Age
+    - T
+    - V
+
+implicitly_unwrapped_optional:
+  mode: all_except_iboutlets
+
+large_tuple:
+  warning: 4
+  error: 5
+
+type_body_length:
+  warning: 1000
+  error: 1000
+
+trailing_comma:
+  mandatory_comma: false
+
+number_separator:
+  minimum_length: 8
+
+private_outlet:
+  allow_private_set: false
+
+
+colon:
+  severity: error
+  comma: error
+  empty_count: error
+  legacy_constant: error
+  legacy_constructor: error
+  opening_brace: error
+  trailing_newline: error
+  trailing_semicolon: error
+  weak_delegate: error
+  class_delegate_protocol: error
+  mark: error
+  unneeded_break_in_switch: error
+  force_unwrapping: error
+
+custom_rules:
+  explicit_failure_calls:
+      name: “Avoid asserting ‘false’”
+      regex: ‘((assert|precondition)\(false)’
+      message: “Use assertionFailure() or preconditionFailure() instead.”
+      severity: warning
+  multiple_empty_lines:
+     name: "Multiple Empty Lines"
+     regex: '((?:\s*\n){3,})'
+     message: "There are too many line breaks"
+     severity: error
+  comments_space:
+      name: "Space After Comment"
+      regex: '(^ *//\w+)'
+      message: "There should be a space after //"
+      severity: error
+  mark_space:
+      name: "Mark should have a space before Mark, and semicoloms after"
+      regex: '(^(\s){*}(// MARK: - ){1}(.*)$)'
+      message: "There should be a space after //"
+      severity: error
+  empty_line_after_guard:
+      name: "Empty Line After Guard"
+      regex: '(^ *guard[ a-zA-Z0-9=?.\(\),><!]*\{[ a-zA-Z0-9=?.\(\),><!]*\}\n *(?!(?:return|guard))\S+)'
+      message: "There should be an empty line after a guard"
+      severity: error
+  capture_list_map_function_unnamed_variables_usage:
+      name: "Map function with unnamed variables and capture list"
+      regex: '(^[\ta-zA-Z0-9?.\(\),><! \t\n]*[=]{1}[ \n\t]*\{{1}[ \n\t]*[\[]{1}[a-zA-Z0-9 ]*[\]]{1}[ \n\t]*[i]{1}[n]{1}[ ]*[\n]*[\t ]*[a-zA-Z0-9=?.\(\),><!= ]*[$][a-zA-Z0-9=?.\(\),><!= ]*[\n]*[\t ]*[\}]{1})'
+      message: "Capture list in map function should not be used with unnamed variables"
+      severity: error
+  double_space:
+    include: "*.swift"
+    name: "Double space are disabled"
+    regex: '([a-z,A-Z] \s+)'
+    message: "Double space between keywords"
+    match_kinds: keyword
+    severity: error
+  avoid_not_english_names:
+      name: "Can't contain cyrylic letters: а-я А-Я"
+      regex: '[а-яА-ЯёЁ]'
+      message: "Name shouldn't contains cyrylic letters"
+      severity: error
